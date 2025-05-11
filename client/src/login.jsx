@@ -1,112 +1,215 @@
+// import axios from 'axios';
+// import React, { useContext, useEffect, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import {context} from './App'
+// import { ImCross } from "react-icons/im";
+// import { jwtDecode} from 'jwt-decode';
+// import { FiEye } from "react-icons/fi";
+// import { FiEyeOff } from "react-icons/fi";
+
+// const Login =()=>{
+     
+//     const [login , setLogin]=useState({email:'' , pass:''});
+//     const [showEye,setShowEye] = useState(false)
+//     const {unpDetail,setUnpDetail,setShowLogin,setClick} = useContext(context)
+//     const navigate = useNavigate()
+//     // const dispatch = useDispatch()
+//     const handleInput=(e)=>{
+//         setLogin({...login,[e.target.name]:e.target.value})
+//     }
+
+//     useEffect(()=>{
+//         console.log('token',unpDetail.token)
+//         console.log('userid',unpDetail.userId)
+//     })
+//     const handleLogin = async()=>{
+//         try{
+//             if(!login.email || !login.pass){
+//                 alert('fill the mendetary fields')
+//             }
+//            else{
+//             const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//             const check = validEmail.test(login.email)
+//             if(check==true){
+//            const res = await axios.post('https://project-management-system-ivory.vercel.app/api/CheckUser',login)
+//            console.log('handlelogin',res.data.msg)
+//               if(res.data.msg=='failed'){
+//               alert('email or password is wrong')
+//               }
+//                else {
+//                 if(res.data.token!=''){
+//                setUnpDetail((prevState) => ({
+//                 ...prevState,
+//                 texp:'not expired'
+//                }));
+//               console.log('token',res.data.token)
+//               setUnpDetail((prevState) => ({
+//                 ...prevState,
+//                 token:res.data.token
+//               }));
+//               console.log('unptoken',unpDetail.token)
+//               const detoken = jwtDecode(res.data.token)
+//               console.log('decodedtoken',detoken)
+//               if(detoken.id!='' && detoken.uname!=''){
+//                 setUnpDetail((prevState) => ({
+//                 ...prevState,
+//                 userId:detoken.id,
+//                 uname:detoken.uname
+//                 }));
+//                 navigate('/dashboard')
+//                 setShowLogin(false)
+//                 setClick('d')
+//                }
+        
+//              }
+//             }
+//           }
+//           else{
+//             alert('Invalid email')
+//           }
+//         } 
+        
+       
+//     }
+//     catch(e){
+//         console.log("loginerror",e)
+//     }
+//     }
+//     useEffect(()=>{
+//         console.log('eye',showEye)
+//     })
+//     return(
+//         <>
+//   <div  className='relative bg-[#020035] posSnL z-10 w-[280px] posS mt-[50px] p-[20px] rounded-lg
+//         h-[300px] items-center justify-center flex flex-col '>
+//             <h1 className='text-white  text-xl '>Login</h1><br/>
+//        <div> 
+//          <label className='text-[#fed573] '>Email :</label><br/>
+//         <input type='email' placeholder='Enter email :' value={login.email}
+//         name='email' className='w-[230px] rounded-sm' onChange={handleInput}/>
+//         </div><br/>
+
+//       <div>
+//        <label className='text-[#fed573] '>Password :</label><br/>
+//        <div className='relative'> 
+//          <input type={showEye==true?'text':'password'} placeholder='Enter password :' value={login.pass}
+//          name='pass' className='w-[230px] rounded-sm relative' onChange={handleInput}/> 
+//         {showEye==true?<FiEye color='black' className='absolute right-1 top-1' onClick={()=>setShowEye(false)}/>:
+//         <FiEyeOff color='black' className='absolute right-1 top-1' onClick={()=>setShowEye(true)}/>}
+//        </div> 
+//      </div> <br/><br/>
+
+//         <ImCross size='10px' color='white'className='absolute right-0 top-0 m-[5px] cursor-pointer' 
+//         onClick={()=>{setShowLogin(false)}} />
+//         <button onClick={handleLogin}  className='bg-[#E92085] text-white rounded-xl w-20 h-8'>Login</button>
+//  </div>
+        
+        
+//         </>
+//     )
+// }
+
+// export default Login;
+
+
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {context} from './App'
+import { context } from './App';
 import { ImCross } from "react-icons/im";
-import { jwtDecode} from 'jwt-decode';
-import { FiEye } from "react-icons/fi";
-import { FiEyeOff } from "react-icons/fi";
+import { jwtDecode } from 'jwt-decode';
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
-const Login =()=>{
-     
-    const [login , setLogin]=useState({email:'' , pass:''});
-    const [showEye,setShowEye] = useState(false)
-    const {unpDetail,setUnpDetail,setShowLogin,setClick} = useContext(context)
-    const navigate = useNavigate()
-    // const dispatch = useDispatch()
-    const handleInput=(e)=>{
-        setLogin({...login,[e.target.name]:e.target.value})
+const Login = () => {
+  const [login, setLogin] = useState({ email: '', pass: '' });
+  const [showEye, setShowEye] = useState(false);
+  const [loading, setLoading] = useState(false); // ✅ Loading state
+  const { unpDetail, setUnpDetail, setShowLogin, setClick } = useContext(context);
+  const navigate = useNavigate();
+
+  const handleInput = (e) => {
+    setLogin({ ...login, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = async () => {
+    if (!login.email || !login.pass) {
+      alert('Fill the mandatory fields');
+      return;
     }
 
-    useEffect(()=>{
-        console.log('token',unpDetail.token)
-        console.log('userid',unpDetail.userId)
-    })
-    const handleLogin = async()=>{
-        try{
-            if(!login.email || !login.pass){
-                alert('fill the mendetary fields')
-            }
-           else{
-            const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const check = validEmail.test(login.email)
-            if(check==true){
-           const res = await axios.post('https://project-management-system-ivory.vercel.app/api/CheckUser',login)
-           console.log('handlelogin',res.data.msg)
-              if(res.data.msg=='failed'){
-              alert('email or password is wrong')
-              }
-               else {
-                if(res.data.token!=''){
-               setUnpDetail((prevState) => ({
-                ...prevState,
-                texp:'not expired'
-               }));
-              console.log('token',res.data.token)
-              setUnpDetail((prevState) => ({
-                ...prevState,
-                token:res.data.token
-              }));
-              console.log('unptoken',unpDetail.token)
-              const detoken = jwtDecode(res.data.token)
-              console.log('decodedtoken',detoken)
-              if(detoken.id!='' && detoken.uname!=''){
-                setUnpDetail((prevState) => ({
-                ...prevState,
-                userId:detoken.id,
-                uname:detoken.uname
-                }));
-                navigate('/dashboard')
-                setShowLogin(false)
-                setClick('d')
-               }
-        
-             }
-            }
-          }
-          else{
-            alert('Invalid email')
-          }
-        } 
-        
-       
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!validEmail.test(login.email)) {
+      alert('Invalid email');
+      return;
     }
-    catch(e){
-        console.log("loginerror",e)
-    }
-    }
-    useEffect(()=>{
-        console.log('eye',showEye)
-    })
-    return(
-        <>
-  <div  className='relative bg-[#020035] posSnL z-10 w-[280px] posS mt-[50px] p-[20px] rounded-lg
-        h-[300px] items-center justify-center flex flex-col '>
-            <h1 className='text-white  text-xl '>Login</h1><br/>
-       <div> 
-         <label className='text-[#fed573] '>Email :</label><br/>
-        <input type='email' placeholder='Enter email :' value={login.email}
-        name='email' className='w-[230px] rounded-sm' onChange={handleInput}/>
-        </div><br/>
 
-      <div>
-       <label className='text-[#fed573] '>Password :</label><br/>
-       <div className='relative'> 
-         <input type={showEye==true?'text':'password'} placeholder='Enter password :' value={login.pass}
-         name='pass' className='w-[230px] rounded-sm relative' onChange={handleInput}/> 
-        {showEye==true?<FiEye color='black' className='absolute right-1 top-1' onClick={()=>setShowEye(false)}/>:
-        <FiEyeOff color='black' className='absolute right-1 top-1' onClick={()=>setShowEye(true)}/>}
-       </div> 
-     </div> <br/><br/>
+    try {
+      setLoading(true); // ✅ Start loading
+      const res = await axios.post('https://project-management-system-ivory.vercel.app/api/CheckUser', login);
 
-        <ImCross size='10px' color='white'className='absolute right-0 top-0 m-[5px] cursor-pointer' 
-        onClick={()=>{setShowLogin(false)}} />
-        <button onClick={handleLogin}  className='bg-[#E92085] text-white rounded-xl w-20 h-8'>Login</button>
- </div>
-        
-        
-        </>
-    )
-}
+      if (res.data.msg === 'failed') {
+        alert('Email or password is wrong');
+      } else if (res.data.token !== '') {
+        setUnpDetail((prevState) => ({ ...prevState, texp: 'not expired', token: res.data.token }));
+
+        const detoken = jwtDecode(res.data.token);
+        if (detoken.id && detoken.uname) {
+          setUnpDetail((prevState) => ({
+            ...prevState,
+            userId: detoken.id,
+            uname: detoken.uname
+          }));
+          navigate('/dashboard');
+          setShowLogin(false);
+          setClick('d');
+        }
+      }
+    } catch (e) {
+      console.log("loginerror", e);
+    } finally {
+      setLoading(false); // ✅ End loading
+    }
+  };
+
+  return (
+    <>
+      <div className='relative bg-[#020035] posSnL z-10 w-[280px] mt-[50px] p-[20px] rounded-lg
+        h-[320px] items-center justify-center flex flex-col'>
+        <h1 className='text-white text-xl'>Login</h1><br />
+
+        <div>
+          <label className='text-[#fed573]'>Email :</label><br />
+          <input type='email' placeholder='Enter email :' value={login.email}
+            name='email' className='w-[230px] rounded-sm' onChange={handleInput} disabled={loading} />
+        </div><br />
+
+        <div>
+          <label className='text-[#fed573]'>Password :</label><br />
+          <div className='relative'>
+            <input type={showEye ? 'text' : 'password'} placeholder='Enter password :' value={login.pass}
+              name='pass' className='w-[230px] rounded-sm' onChange={handleInput} disabled={loading} />
+            {showEye ? (
+              <FiEye color='black' className='absolute right-1 top-1 cursor-pointer' onClick={() => setShowEye(false)} />
+            ) : (
+              <FiEyeOff color='black' className='absolute right-1 top-1 cursor-pointer' onClick={() => setShowEye(true)} />
+            )}
+          </div>
+        </div> <br /><br />
+
+        <ImCross size='10px' color='white' className='absolute right-0 top-0 m-[5px] cursor-pointer'
+          onClick={() => { setShowLogin(false) }} />
+
+        <button onClick={handleLogin} disabled={loading}
+          className='bg-[#E92085] text-white rounded-xl w-20 h-8 flex items-center justify-center'>
+          {loading ? (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          ) : (
+            'Login'
+          )}
+        </button>
+      </div>
+    </>
+  );
+};
 
 export default Login;

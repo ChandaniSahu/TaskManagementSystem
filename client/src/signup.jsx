@@ -107,8 +107,9 @@ const Signup = () => {
   const [showEye, setShowEye] = useState(false);
   const [otpSent, setOtpSent] = useState(false); // Track if OTP is sent
   const [loadingOtp, setLoadingOtp] = useState(false);
+  const [loadingSubmit, setLoadingSubmit] = useState(false); 
   const navigate = useNavigate();
-  const { setShowSignup } = useContext(context);
+  const { setShowSignup,setShowLogin } = useContext(context);
 
   // Handle input field changes
   const handleInput = (e) => {
@@ -125,7 +126,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post("https://your-otp-api-url.com/api/generateOTP", { email: signup.email });
+      const res = await axios.post("https://project-management-system-ivory.vercel.app/api/generateOTP", { email: signup.email });
       // Set OTP response if needed
       setOtpSent(true); // OTP sent, show OTP input
     } catch (error) {
@@ -137,25 +138,44 @@ const Signup = () => {
 
   // Handle signup submission
   const handleSignup = async () => {
-    if (!signup.uname || !signup.email || !signup.pass || !signup.Cpass || !signup.otp) {
-      alert('Please fill all fields');
-    } else if (signup.pass !== signup.Cpass) {
-      alert('Passwords do not match');
-    } else {
-      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const check = validEmail.test(signup.email);
-      if (check) {
-        const res = await axios.post('https://your-api-url.com/api/createUser', signup);
-        if (res.data.msg === 'successful') {
-          navigate('/login');
-        } else if (res.data.msg === 'exist') {
-          alert('Email already exists');
-        }
-      } else {
-        alert('Invalid email');
+  if (!signup.uname || !signup.email || !signup.pass || !signup.Cpass || !signup.otp) {
+    alert('Please fill all fields');
+    return;
+  }
+
+  if (signup.pass !== signup.Cpass) {
+    alert('Passwords do not match');
+    return;
+  }
+
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const check = validEmail.test(signup.email);
+
+  if (check) {
+    try {
+      setLoadingSubmit(true); // Start loading
+      const res = await axios.post(
+        'https://project-management-system-ivory.vercel.app/api/createUser',
+        signup
+      );
+
+      if (res.data.msg === 'successful') {
+        setShowSignup(false);
+        setShowLogin(true);
+        setLoadingSubmit(false);
+      } else if (res.data.msg === 'exist') {
+        alert('Email already exists');
+        setLoadingSubmit(false);
       }
+    } catch (error) {
+      alert('Signup failed');
+    } finally {
+      setLoadingSubmit(false); // Stop loading
     }
-  };
+  } else {
+    alert('Invalid email');
+  }
+};
 
   return (
     <>
@@ -248,17 +268,16 @@ const Signup = () => {
               />
             </div><br />
 
-            <ImCross
-              size='10px'
-              color='white'
-              className='absolute right-0 top-0 m-[8px] cursor-pointer'
-              onClick={() => { setShowSignup(false) }}
-            />
+           
+
             <button onClick={handleSignup} className='bg-[#E92085] text-white rounded-xl w-20 h-8 mt-4'>
-              Submit
+              {loadingSubmit?'Submitting...':'Submit'}
             </button>
           </>
         )}
+        <ImCross size='10px' 
+           color='white'className='absolute right-0 top-0 m-[8px] cursor-pointer' 
+           onClick={()=>{setShowSignup(false)}} />
       </div>
     </>
   );

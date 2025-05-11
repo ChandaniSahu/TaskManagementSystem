@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../schema/userSchema')
 const Project = require('../schema/projectSchema')
+const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const Auth = require('./Auth')
@@ -176,4 +177,56 @@ router.delete('/deleteProject/:prjId',async(req,res)=>{
     console.log('server error in deleteproject')
   }
 })
+
+router.post('/generateOTP',async (req,res)=>{
+    const { email } = req.body 
+    console.log('email in generateOTP',email)
+
+    OTP = Math.floor(Math.random() * 1000000).toString();
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+           user: 'rrrsahu2005@gmail.com',
+           pass:process.env.EMAIL_PASS
+        }
+     });
+
+     const mailOptions = {
+        from: 'rrrsahu2005@gmail.com',
+        to: email,
+        subject: 'Project Management Tool - OTP Verification',
+html: `
+  <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f9f9f9;">
+      <h2 style="color: #2c3e50;">Welcome to Project Management Tool</h2>
+      <p style="font-size: 16px; color: #34495e;">
+          Your One-Time Password (OTP) for account verification is:
+      </p>
+      <h1 style="color: #27ae60; font-size: 28px; letter-spacing: 2px;">${OTP}</h1>
+      <p style="font-size: 14px; color: #7f8c8d;">
+          Enter this OTP to complete your sign-up or login process. This code is valid for the next few minutes only.
+      </p>
+      <p style="font-size: 12px; color: #95a5a6;">If you did not request this OTP, please disregard this message.</p>
+      <br>
+      <p style="font-size: 14px; color: #2c3e50; text-align: left;">
+          Best regards,<br>
+          Project Management Team
+      </p>
+  </div>
+`
+
+     };
+
+     const response = await transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+           console.error(error);
+        } else {
+           console.log('Email sent: ' + info.response);
+           res.json({otp:OTP})
+        }
+
+     });
+})
+
+
 module.exports = router 
