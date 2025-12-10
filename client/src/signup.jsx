@@ -159,7 +159,7 @@ const Signup = () => {
         signup
       );
 
-      if (res.data.msg === 'successful') {
+      if (res.data.msg === 'successfull') {
         setShowSignup(false);
         setShowLogin(true);
         setLoadingSubmit(false);
@@ -216,9 +216,9 @@ const Signup = () => {
           <button
             onClick={handleOTPGenerate}
             disabled={loadingOtp || otpSent}
-            className='bg-[#E92085] text-white rounded-xl w-20 h-8 mt-4'
+            className='bg-[#E92085] text-white rounded-xl flex items-center justify-center p-2 h-8 mt-4'
           >
-            {loadingOtp ? 'Sending OTP...' : 'Send OTP'}
+            {loadingOtp ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : 'Send OTP'}
           </button>
         )}
 
@@ -271,7 +271,7 @@ const Signup = () => {
            
 
             <button onClick={handleSignup} className='bg-[#E92085] text-white rounded-xl w-20 h-8 mt-4'>
-              {loadingSubmit?'Submitting...':'Submit'}
+              {loadingSubmit?<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>:'Signup'}
             </button>
           </>
         )}

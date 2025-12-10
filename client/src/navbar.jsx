@@ -15,7 +15,7 @@ const Navbar = () =>{
     
     return(
         <>
-       <div className="relative sticky top-[0px] left-[0px] flex justify-between items-center px-[30px] bg-[#020035] h-[60px]">
+       <div className="relative sticky top-[0px] left-[0px] z-[150] flex justify-between items-center px-[30px] bg-[#020035] h-[60px]">
         <img title='Project Management Tool'
           src={ProjectLogo} alt="Project Logo"
           className="rounded-full w-14 h-14 "
@@ -24,16 +24,16 @@ const Navbar = () =>{
 {unpDetail.userId==='' ?
 
     <div className="pl-5 flex space-x-5    ">
-          <button onClick={()=>{setShowSignup(true);setShowLogin(false)}} className="justify-center items-center flex text-black rounded-xl p-1 w-20 
+          <button onClick={()=>{setShowSignup(true);setShowLogin(false)}} className="justify-center items-center flex text-white hover:scale-105 rounded-xl p-1 w-20 
            border-orange bg-[#E92085] hover:text-white"> Signup</button>
 
-          <button onClick={()=>{setShowLogin(true);setShowSignup(false)}} className="justify-center items-center flex text-black 
+          <button onClick={()=>{setShowLogin(true);setShowSignup(false)}} className="justify-center items-center flex text-white hover:scale-105 rounded-xl p-1 w-20 
           border-light-blue rounded-xl p-1 w-20  bg-[#F89128] hover:text-white">Login</button>
         </div>
         :
         <>
         
-        <div className='text-white text-[17px] flex justify-between w-[900px] pl-[40px] custom-range:hidden '>
+        <div className='text-white text-[17px] z-[150] flex justify-between w-[900px] pl-[40px] custom-range:hidden '>
          <Link  className={click === 'h' ? 'text-[#fed573]' : 'hover:text-[#fed573]'} to='/' onClick={()=>setClick('h')}>Home</Link>
         <Link className={click === 'd' ? 'text-[#fed573]' : 'hover:text-[#fed573]'} to='/dashboard' onClick={()=>setClick('d')}>DashBoard</Link>
         <Link className={click === 'c' ? 'text-[#fed573]' : 'hover:text-[#fed573]'} to='/createproject' onClick={()=>setClick('c')}>CreateTask</Link>

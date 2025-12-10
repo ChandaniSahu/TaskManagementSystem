@@ -14,7 +14,7 @@ const Home = () => {
 {/* <img src={bg} className='w-full h-[100vh] '/> */}
 <div className=' pl-[50px] pb-[50px] text-white w-[40rem] text-wrap homRes:pl-[5px] '>
 <div className='text-[3rem] '>Welcome ! {unpDetail.uname==''?<>In Our</>:<>{unpDetail.uname}</>}</div>    
- <div className=' text-[4rem] text-wrap homRes:text-[3rem]'>Project Management Tool</div> 
+ <div className=' text-[4rem] text-wrap homRes:text-[3rem]'>Task Management Tool</div> 
    <pre className=' text-wrap '>            
              {
             `Our tool helps you streamline your projects, 

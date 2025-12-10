@@ -174,11 +174,34 @@ return{
     <>
     {unpDetail.texp=='expired'?<>{navigate('/expired')}</>:
     <> 
-      <div className='relative bg-white py-[20px] text-white h-auto z-0'>
+      <div className='relative bg-white py-[20px] text-white min-h-screen z-0 overflow-y-auto'>
         <h1 className='flex justify-center items-center text-[30px] text-[#455867] font-[500]'>Dashboard</h1><br /> 
         
    
-      {NoPrj=='no projects'? <h1 className='text-black  pl-[20px] h-[470px]'>here is no tasks</h1>:
+      {NoPrj=='no projects'? <div className="flex flex-col items-center justify-center h-[470px] bg-white rounded-2xl shadow-sm p-6 text-center">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-32 h-32 mb-4 text-gray-400"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={1.5}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3 7.5l9 4.5 9-4.5M3 7.5v9l9 4.5 9-4.5v-9M3 7.5l9 4.5 9-4.5"
+    />
+  </svg>
+
+  <h1 className="text-2xl font-semibold text-gray-800 mb-2">
+    No tasks available
+  </h1>
+  <p className="text-gray-500 text-sm">
+    You don’t have any tasks yet. Once added, they’ll show up here.
+  </p>
+</div>
+:
       <>{Pdetail==''?<div className='flex flex-col justify-center items-center h-[470px] text-[#455867]'><ThreeCircles color="#455867" height={50} width={50} />
          <h1 >loading...</h1></div>:
       <>
@@ -246,7 +269,7 @@ return{
        
      
       </>}</>}
-      <button onClick={navigateCProject} title='Create Task' className='absolute bottom-0 right-0 m-[20px] w-[40px] h-[40px] rounded-[50%] bg-[#F89128] text-white text-[20px] '>+</button>
+      <button onClick={navigateCProject} title='Create Task' className='fixed bottom-0 right-0 m-[20px] w-[50px] h-[50px] p-4 rounded-[50%] bg-[#F89128] text-white text-[25px] justify-center items-center flex '>+</button>
      </div></>}
      
         
