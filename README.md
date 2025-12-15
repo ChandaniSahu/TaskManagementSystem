@@ -1,43 +1,47 @@
-# Project Management Tool
-This web application is a project management tool designed for developers to organize and track their tasks and projects effectively. It allows users to create projects, manage tasks and subtasks, set deadlines, and track progress through a dashboard. The application is ideal for developers who need to keep track of various stages of project development.
+# Task Management Tool
+This web application is a task management system that helps users organize, manage, and track tasks along with their subtasks in a simple and interactive way. Users can monitor progress visually, manage deadlines, and stay updated on task status from a central dashboard. It is useful for individuals or teams who want clear control over their work.
 
 ## Live Link 
 You can visit here : https://chandani-project-management.netlify.app/ 
 
 ## Features
 
-- Create a Project: Developers can create a new project and describe the main task. Example: Building a "Personal Diary" application.
+- **Create Tasks:**  
+  Users can create a main task and add a clear description.  
+  *Example: Build a “Personal Diary” application.*
 
-- Add Subtasks: Within each project, users can define specific subtasks (e.g., signup, login, create note, edit note).
+- **Add Subtasks:**  
+  Each task can be broken into smaller subtasks such as signup, login, create note, and edit note.
 
-- Set Deadlines: Each task and subtask can have a deadline to ensure proper time management.
+- **Set Deadlines:**  
+  Users can assign deadlines to both tasks and subtasks for better time planning.
 
-- Track Progress: Users can track the completion status of tasks and subtasks. The progress is updated in real-time based on task completion.
+- **Interactive Progress Tracking:**  
+  Progress updates automatically as subtasks are completed. Users can clearly see how much work is done and how much is left.
 
-- Edit Tasks and Subtasks: Users can modify or update their tasks and subtasks, including deadlines or descriptions.
+- **Edit Tasks and Subtasks:**  
+  Tasks and subtasks can be updated anytime, including their name, description, or deadline.
 
-- Dashboard View: The main dashboard displays a summary of all projects, showing key information such as:
+- **Dashboard Overview:**  
+  The dashboard shows:
+  - Completed tasks  
+  - Overall progress  
+  - Upcoming and missed deadlines  
 
-    Tasks completed
+- **Time Tracking:**  
+  A built-in timer helps track time spent on each task and subtask.
 
-    Progress towards completion
-
-    Upcoming deadlines
-
-- Timer: A timer feature is included for each task and project to track time taken and time remaining until the deadline.
-
-- Deadline Notifications: Users are notified when a deadline is approaching or missed.
 
 
 ## Technologies Used
 
-- Frontend: HTML, CSS, JavaScript (React.js or similar framework)
+- Frontend: ReactJs , Tailwind CSS
 
-- Backend: Node.js (Express.js) or similar
+- Backend: Node.js (Express.js)
 
-- Database: MongoDB or MySQL
+- Database: MongoDB 
 
-- Authentication: JWT (JSON Web Tokens) or OAuth
+- Authentication: JWT (JSON Web Tokens) 
 
 - Other Libraries: Moment.js (for handling deadlines and dates)
 
@@ -55,10 +59,10 @@ You can visit here : https://chandani-project-management.netlify.app/
 ## Steps
 
 - Clone the repository to your local machine:
-git clone https://github.com/yourusername/project-management-tool.git
+git clone [https://github.com/yourusername/project-management-tool.git](https://github.com/ChandaniSahu/TaskManagementSystem.git)
 
 - Navigate to the project directory:
-cd project-management-tool
+cd client
 
 - Install dependencies:
 npm install
@@ -68,7 +72,7 @@ Create a .env file in the root directory and configure necessary environment var
 
 - Run the development server:
 npm run dev
-Open your browser and go to http://localhost:3000 to start using the application.
+Open your browser and go to http://localhost:5173 to start using the application.
 
 
 
